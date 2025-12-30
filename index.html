@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸</title>
+
+<style>
+/* ================= ROOT & RESET ================= */
+:root{
+  --bg1:#0d0415;
+  --bg2:#2a0a3d;
+  --bg3:#4b145f;
+  --accent:#ffb6e6;
+  --soft:#f9edff;
+}
+*{box-sizing:border-box}
+
+/* ================= BODY ================= */
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Georgia',serif;
+  background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3));
+  background-size:400% 400%;
+  animation:bgmove 24s ease infinite;
+  color:var(--soft);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+@keyframes bgmove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* ================= FLOWERS ================= */
+.flower{
+  position:absolute;
+  width:140px;
+  height:140px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  animation:float 20s linear infinite;
+}
+.flower::before,.flower::after{
+  content:'';
+  position:absolute;
+  inset:26px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:50%;
+}
+@keyframes float{
+  from{transform:translateY(90px) rotate(0deg)}
+  to{transform:translateY(-140px) rotate(360deg)}
+}
+
+/* ================= MAIN PANEL ================= */
+.panel{
+  width:94%;
+  max-width:560px;
+  padding:40px 28px;
+  border-radius:28px;
+  background:rgba(0,0,0,.32);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 80px rgba(255,182,230,.22);
+  text-align:center;
+}
+
+h1{
+  font-weight:normal;
+  letter-spacing:2px;
+  margin-bottom:14px;
+}
+
+p{
+  font-size:1.05rem;
+  line-height:1.8;
+  margin:14px 0;
+}
+
+/* ================= BUTTONS ================= */
+button{
+  margin:8px;
+  padding:12px 24px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,.45);
+  background:transparent;
+  color:var(--soft);
+  font-size:.95rem;
+}
+button:hover{
+  background:rgba(255,255,255,.14);
+}
+
+/* ================= SECTIONS ================= */
+.section{
+  display:none;
+  margin-top:18px;
+  padding:20px;
+  border-radius:20px;
+  background:rgba(255,255,255,.06);
+}
+
+/* ================= METER ================= */
+.meter{
+  width:260px;
+  height:12px;
+  border:1px solid #fff;
+  border-radius:10px;
+  overflow:hidden;
+  margin:18px auto;
+}
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff9ad5,#ffc1e8);
+}
+
+/* ================= FADE ================= */
+.fadein{
+  animation:fade 1.6s forwards;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ========== FLOWERS GENERATION ========== -->
+<script>
+for(let i=0;i<46;i++){
+  const f=document.createElement("div");
+  f.className="flower";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*100+"vh";
+  f.style.animationDelay=Math.random()*14+"s";
+  document.body.appendChild(f);
+}
+</script>
+
+<!-- ========== MUSIC ========== -->
+<audio autoplay loop>
+  <source src="sawaal.mp3" type="audio/mpeg">
+</audio>
+
+<div class="panel">
+  <h1>Gaurika 🌸</h1>
+  <p>This isn’t meant to be rushed.<br>Open what feels right.</p>
+
+  <!-- CONTROL PANEL -->
+  <button onclick="toggle('letters')">Love Letters</button>
+  <button onclick="toggle('notice')">Things I Notice</button>
+  <button onclick="toggle('art')">Art & You</button>
+  <button onclick="toggle('depth')">Emotion Depth</button>
+  <button onclick="toggle('silence')">Silence</button>
+
+  <!-- LETTERS -->
+  <div id="letters" class="section">
+    <p><b>Letter I</b><br>
+    You carry a calm that doesn’t seek attention.<br>
+    It stays. And it’s felt.</p>
+
+    <p><b>Letter II</b><br>
+    There’s beauty in how gently you exist.<br>
+    That softness is rare.</p>
+
+    <p><b>Letter III</b><br>
+    This isn’t expectation.<br>
+    Just honesty placed carefully.</p>
+
+    <p><b>Letter IV</b><br>
+    I care about you — quietly, sincerely.</p>
+
+    <p><b>Letter V</b><br>
+    Some people leave an imprint without trying.<br>
+    You’re one of them.</p>
+
+    <p><b>Letter VI</b><br>
+    Nothing needs to be answered here.</p>
+  </div>
+
+  <!-- NOTICE -->
+  <div id="notice" class="section">
+    <p>Small things I notice:</p>
+    <p>• the focus in your eyes</p>
+    <p>• the calm in your presence</p>
+    <p>• the way art feels natural to you</p>
+    <p>• the softness that stays even in silence</p>
+  </div>
+
+  <!-- ART -->
+  <div id="art" class="section">
+    <p>Art isn’t just something you do.<br>
+    It’s how you feel, observe, and translate the world.</p>
+    <p>That depth is easy to admire.</p>
+  </div>
+
+  <!-- DEPTH -->
+  <div id="depth" class="section">
+    <p>Emotional depth (not measured lightly)</p>
+    <div class="meter"><div id="fill" class="fill"></div></div>
+    <button onclick="fillMeter()">Begin</button>
+  </div>
+
+  <!-- SILENCE -->
+  <div id="silence" class="section">
+    <p>This space is intentionally quiet.</p>
+    <p>No meaning. No weight.</p>
+    <p>Just presence.</p>
+  </div>
+</div>
+
+<script>
+function toggle(id){
+  const el=document.getElementById(id);
+  el.style.display = el.style.display==="block" ? "none" : "block";
+  el.classList.add("fadein");
+}
+
+function fillMeter(){
+  let p=0;
+  const fill=document.getElementById("fill");
+  const i=setInterval(()=>{
+    p++;
+    fill.style.width=p+"%";
+    if(p>=100) clearInterval(i);
+  },30);
+}
+</script>
+
+</body>
+</html>
