@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸</title>
+
+<style>
+:root{
+  --bg1:#12051c;
+  --bg2:#2b0b3a;
+  --bg3:#4b145f;
+  --soft:#f9edff;
+  --pink:#ffb6e6;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:Georgia,serif;
+  background:linear-gradient(120deg,var(--bg1),var(--bg2),var(--bg3));
+  background-size:400% 400%;
+  animation:bg 20s ease infinite;
+  color:var(--soft);
+}
+
+@keyframes bg{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* START SCREEN */
+#start{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:inherit;
+  z-index:10;
+}
+#start button{
+  padding:16px 34px;
+  border-radius:40px;
+  background:transparent;
+  border:1px solid #fff;
+  color:#fff;
+  font-size:1.1rem;
+}
+
+/* FLOWERS */
+.flower{
+  position:absolute;
+  width:90px;height:90px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+  animation:float 18s linear infinite;
+}
+.flower::before{
+  content:'';
+  position:absolute;
+  inset:18px;
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:50%;
+}
+@keyframes float{
+  from{transform:translateY(60px) rotate(0deg)}
+  to{transform:translateY(-100px) rotate(360deg)}
+}
+
+/* HEART */
+.heart{
+  position:absolute;
+  font-size:22px;
+  animation:fade 2s forwards;
+}
+@keyframes fade{
+  from{opacity:1;transform:translateY(0)}
+  to{opacity:0;transform:translateY(-40px)}
+}
+
+/* PANEL */
+.panel{
+  position:relative;
+  width:94%;
+  max-width:520px;
+  margin:auto;
+  top:50%;
+  transform:translateY(-50%);
+  padding:30px;
+  border-radius:26px;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 80px rgba(255,182,230,.25);
+  text-align:center;
+  animation:heartbeat 3s infinite;
+}
+
+@keyframes heartbeat{
+  0%{box-shadow:0 0 50px rgba(255,182,230,.2)}
+  50%{box-shadow:0 0 100px rgba(255,182,230,.35)}
+  100%{box-shadow:0 0 50px rgba(255,182,230,.2)}
+}
+
+button{
+  margin:6px;
+  padding:10px 20px;
+  border-radius:30px;
+  background:transparent;
+  border:1px solid #fff;
+  color:#fff;
+  font-size:.95rem;
+}
+
+.small{
+  font-size:.85rem;
+  opacity:.8;
+  margin-top:10px;
+}
+
+/* DRAW */
+canvas{
+  width:100%;
+  height:180px;
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+  margin-top:10px;
+}
+
+/* BLUSH */
+.blush{
+  animation:blush 1s;
+}
+@keyframes blush{
+  from{background:rgba(255,182,230,.25)}
+  to{background:transparent}
+}
+
+/* HIDE */
+.hidden{display:none}
+</style>
+</head>
+
+<body>
+
+<div id="start">
+  <button onclick="begin()">Tap to begin</button>
+</div>
+
+<script>
+for(let i=0;i<24;i++){
+  let f=document.createElement("div");
+  f.className="flower";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*100+"vh";
+  f.style.animationDelay=Math.random()*8+"s";
+  document.body.appendChild(f);
+}
+</script>
+
+<div class="panel hidden" id="panel">
+  <h2>Gaurika 🌸</h2>
+  <p>Tap anywhere. There’s no right or wrong.</p>
+
+  <button onclick="dontClick()">Don’t click this</button>
+  <button id="shy" onclick="shy()">Click me maybe</button>
+  <button onclick="resetFake()">Reset</button>
+  <button onclick="silly()">This is a little silly</button>
+  <button onclick="compliment()">Unlock something shy</button>
+
+  <div class="small" id="msg"></div>
+
+  <canvas id="draw"></canvas>
+
+  <p id="love" class="hidden">
+    I won’t say big or dramatic things here.<br><br>
+    There’s something very calm and beautiful about you —
+    the way you see the world, the way art feels natural to you,
+    the softness you carry without trying.<br><br>
+    I just wanted to leave something warm here.
+  </p>
+
+  <button onclick="exit()">Leave quietly</button>
+</div>
+
+<script>
+const panel=document.getElementById("panel");
+const msg=document.getElementById("msg");
+const love=document.getElementById("love");
+
+function begin(){
+  document.getElementById("start").style.display="none";
+  panel.classList.remove("hidden");
+}
+
+document.body.addEventListener("click",e=>{
+  if(Math.random()<0.25){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerText="💗";
+    h.style.left=e.clientX+"px";
+    h.style.top=e.clientY+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2000);
+  }
+});
+
+function dontClick(){
+  msg.innerText="Yeah… that was cute of you.";
+}
+
+function shy(){
+  msg.innerText="Okay fine 🙈";
+}
+
+function resetFake(){
+  msg.innerText="Nice try.";
+}
+
+function silly(){
+  msg.innerText="Yeah. On purpose.";
+  panel.classList.add("blush");
+}
+
+function compliment(){
+  const list=[
+    "You have a very calming presence.",
+    "You make soft things feel special.",
+    "Your creativity shows quietly."
+  ];
+  msg.innerText=list[Math.floor(Math.random()*list.length)];
+  love.classList.remove("hidden");
+}
+
+/* DRAW */
+const canvas=document.getElementById("draw");
+const ctx=canvas.getContext("2d");
+let drawing=false;
+canvas.addEventListener("pointerdown",()=>drawing=true);
+canvas.addEventListener("pointerup",()=>drawing=false);
+canvas.addEventListener("pointermove",e=>{
+  if(!drawing)return;
+  ctx.fillStyle="rgba(255,182,230,.6)";
+  ctx.beginPath();
+  ctx.arc(e.offsetX,e.offsetY,3,0,Math.PI*2);
+  ctx.fill();
+});
+
+function exit(){
+  panel.style.opacity=0;
+  setTimeout(()=>alert("Thank you for being here 🌸"),1200);
+}
+</script>
+
+</body>
+</html>
